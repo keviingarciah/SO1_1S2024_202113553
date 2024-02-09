@@ -3,7 +3,7 @@ import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 @Schema({
   timestamps: true,
 })
-export class ImageCapture {
+export class Photo {
   @Prop({
     required: true,
     trim: true,
@@ -11,4 +11,4 @@ export class ImageCapture {
   base64: string;
 }
 
-export const ImageCaptureSchema = SchemaFactory.createForClass(ImageCapture);
+export const PhotoSchema = SchemaFactory.createForClass(Photo);

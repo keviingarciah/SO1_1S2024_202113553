@@ -1,8 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import Webcam from "react-webcam";
 import imageCompression from "browser-image-compression";
-
-const API_URL = "http://localhost:3000/api";
+import { captureRequest } from "../api/photos";
 
 const WebcamCapture = () => {
   const webcamRef = useRef(null);
@@ -42,18 +41,9 @@ const WebcamCapture = () => {
     }
   }, [imgSrc]);
 
-  const captureRequest = (image) =>
-    fetch(`${API_URL}/webcam`, {
-      method: "POST",
-      body: JSON.stringify(image),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
   return (
     <div>
-      <div>
+      <div className="flex justify-center">
         <Webcam audio={false} ref={webcamRef} screenshotFormat="image/jpeg" />
       </div>
       <div className="flex justify-center">

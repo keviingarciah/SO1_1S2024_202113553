@@ -1,17 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { ImageCapture } from '../schemas/webcam.schema';
+import { Photo } from '../schemas/webcam.schema';
 import { Model } from 'mongoose';
-import { CaptureDto } from 'src/dto/capture.dto';
+import { PhotoDto } from 'src/dto/capture.dto';
 
 @Injectable()
 export class WebcamService {
-  constructor(
-    @InjectModel(ImageCapture.name) private taskModel: Model<ImageCapture>,
-  ) {}
+  constructor(@InjectModel(Photo.name) private webCamModel: Model<Photo>) {}
 
-  async capture(captureImage: CaptureDto) {
-    const newImage = new this.taskModel(captureImage);
+  async capture(captureImage: PhotoDto) {
+    const newImage = new this.webCamModel(captureImage);
     return newImage.save();
+  }
+
+  getAll() {
+    return this.webCamModel.find();
   }
 }

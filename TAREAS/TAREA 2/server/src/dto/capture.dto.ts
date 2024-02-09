@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 
-export class CaptureDto {
+export class PhotoDto {
   @IsString()
   @IsNotEmpty()
   base64: string;
