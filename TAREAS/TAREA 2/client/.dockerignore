@@ -1,0 +1,16 @@
+# Ignorar archivos y directorios específicos para Docker
+
+# Node.js
+node_modules
+
+# Archivos de compilación
+dist
+build
+
+# Archivos y directorios locales que no se necesitan en el contenedor
+.git
+.vscode
+.DS_Store
+
+# Log
+npm-debug.log

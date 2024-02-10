@@ -4,7 +4,8 @@ import { WebcamModule } from './webcam/webcam.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost/so1tarea2'),
+    //MongooseModule.forRoot('mongodb://localhost/so1tarea2'),
+    MongooseModule.forRoot('mongodb://mongo/so1tarea2'),
     WebcamModule,
   ],
   controllers: [],

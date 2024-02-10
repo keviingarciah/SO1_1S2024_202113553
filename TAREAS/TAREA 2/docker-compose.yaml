@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+  react-app:
+    image: tarea2-client
+    stdin_open: true
+    ports:
+      - "8080:8080"
+    depends_on:
+      - api-server
+
+  api-server:
+    image: tarea2-server
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
+    driver: local
