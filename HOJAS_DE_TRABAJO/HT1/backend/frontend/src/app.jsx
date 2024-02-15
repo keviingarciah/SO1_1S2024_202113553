@@ -8,6 +8,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 export function App(props) {
   const [ramUsage, setRamUsage] = useState(0);
   const [ramFree, setRamFree] = useState(0);
+  const [percent, setPercent] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -19,10 +20,13 @@ export function App(props) {
 
   function getRam() {
     GetRamUsage().then((result) => {
-      const ramUsage = parseInt(result);
-      const ramFree = 8000000 - ramUsage;
+      const ramFree = parseInt(result);
+      const ramUsage = 13900 - ramFree;
       setRamUsage(ramUsage);
       setRamFree(ramFree);
+
+      const percent = Math.round((ramUsage / 13900) * 100);
+      setPercent(percent);
     });
   }
 
@@ -41,7 +45,7 @@ export function App(props) {
       <div className="bg-slate-900 flex justify-center items-center h-screen">
         <div className="text-center">
           <h1 className="text-4xl font-bold text-white mb-5">
-            EN USO: {ramUsage}%
+            EN USO: {percent}%
           </h1>
           <Pie data={data} />
         </div>

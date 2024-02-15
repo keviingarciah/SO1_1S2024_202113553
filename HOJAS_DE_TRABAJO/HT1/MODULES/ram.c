@@ -30,8 +30,12 @@ MODULE_AUTHOR("keviingarciah");
 // Funcion que se ejecutara cada vez que se lea el archivo con el comando CAT
 static int escribir_archivo(struct seq_file *archivo, void *v)
 {
+    unsigned long free;
+
     init_meminfo();
-    seq_printf(archivo, "%lu", si.freeram);
+
+    free = (si.freeram + si.bufferram) * (unsigned long long)si.mem_unit / megabyte;
+    seq_printf(archivo, "%lu", free);
     return 0;
 }
 
