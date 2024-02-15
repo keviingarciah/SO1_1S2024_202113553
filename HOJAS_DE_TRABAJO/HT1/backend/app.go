@@ -2,7 +2,8 @@ package main
 
 import (
 	"context"
-	"fmt"
+	"os/exec"
+	"strings"
 )
 
 // App struct
@@ -21,7 +22,11 @@ func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
 }
 
-// Greet returns a greeting for the given name
-func (a *App) Greet(name string) string {
-	return fmt.Sprintf("Hello %s, It's show time!", name)
+// Gets ram usage
+func (a *App) GetRamUsage() string {
+	out, err := exec.Command("cat", "/proc/ram_202113553").Output()
+	if err != nil {
+		return "Error al obtener el contenido del archivo"
+	}
+	return strings.TrimSuffix(string(out), "\n")
 }
