@@ -13,7 +13,7 @@ export function App(props) {
   useEffect(() => {
     const interval = setInterval(() => {
       getRam();
-    }, 1000);
+    }, 500);
 
     return () => clearInterval(interval);
   }, []);
