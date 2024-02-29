@@ -7,5 +7,5 @@ import (
 )
 
 func SetupRoutes(app *fiber.App) {
-	app.Get("/monitoring", controllers.Monitoring())
+	app.Get("/monitoring/live", controllers.Monitoring())
 }
