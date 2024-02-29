@@ -8,3 +8,5 @@ services:
       - MYSQL_DATABASE=sopes_db
     ports:
       - 3307:3306
+    volumes:
+      - ./data:/var/lib/mysql
