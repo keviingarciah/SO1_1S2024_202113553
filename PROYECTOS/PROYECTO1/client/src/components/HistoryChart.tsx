@@ -40,7 +40,7 @@ function HistoryChart() {
     "March",
     "April",
     "May",
-    "June",
+    "12:00",
     "July",
   ];
 

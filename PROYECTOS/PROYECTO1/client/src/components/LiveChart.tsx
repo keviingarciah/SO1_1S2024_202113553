@@ -6,14 +6,16 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 interface LiveChartProps {
   used: number;
   free: number;
+  labelTitle?: string;
+  labelData?: string;
 }
 
-function LiveChart({ used, free }: LiveChartProps) {
+function LiveChart({ used, free, labelTitle, labelData }: LiveChartProps) {
   const data = {
-    labels: ["Memoria en Uso", "Memoria Libre"],
+    labels: [`${labelTitle} en Uso`, `${labelTitle} Libre`],
     datasets: [
       {
-        label: "Gigabytes (GB)",
+        label: labelData,
         data: [used, free],
         backgroundColor: ["rgba(255, 99, 132, 0.6)", "rgba(54, 162, 235, 0.6)"],
         borderColor: ["rgba(255, 99, 132, 1)", "rgba(54, 162, 235, 1)"],
