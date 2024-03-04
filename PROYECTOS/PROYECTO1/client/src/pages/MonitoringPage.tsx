@@ -2,7 +2,7 @@ import LiveChart from "../components/LiveChart";
 import HistoryChart from "../components/HistoryChart";
 import { useState, useEffect } from "react";
 
-import { getLive } from "../api/monitoring";
+import { getLive, getHistory } from "../api/monitoring.api";
 
 function MonitoringPage() {
   const [freeRam, setFreeRam] = useState(0);
@@ -11,7 +11,13 @@ function MonitoringPage() {
   const [freeCpu, setFreeCpu] = useState(0);
   const [usedCpu, setUsedCpu] = useState(0);
 
+  const [historyRam, setHistoryRam] = useState([]);
+  const [historyCpu, setHistoryCpu] = useState([]);
+  const [historyTime, setHistoryTime] = useState([]);
+
   useEffect(() => {
+    getHistoryMonitoring();
+
     const interval = setInterval(() => {
       getLiveMonitoring();
     }, 1000);
@@ -25,18 +31,29 @@ function MonitoringPage() {
       .then((data) => {
         const liveJson = data;
 
-        const ramFree = liveJson["ram"]["free"] - 337;
+        const ramFree = liveJson["ram"]["free"];
         const ramUsed = 13900 - ramFree;
         setFreeRam(ramFree);
         setUsedRam(ramUsed);
 
-        const cpuData = liveJson["cpu"]["cpu_porcentaje"];
-
-        console.log(cpuData);
-        const cpuUsed = parseFloat((cpuData / 1000000).toFixed(2));
+        const cpuUsed = liveJson["cpu"]["percentage"];
         const cpuFree = 100 - cpuUsed;
         setFreeCpu(cpuFree);
         setUsedCpu(cpuUsed);
+      });
+  }
+
+  function getHistoryMonitoring() {
+    getHistory()
+      .then((response) => response.json())
+      .then((data) => {
+        const historyJson = data;
+        const historyData = historyJson["data"];
+        const historyHistory = historyJson["history"];
+
+        setHistoryRam(historyData["ram"]);
+        setHistoryCpu(historyData["cpu"]);
+        setHistoryTime(historyHistory["time"]);
       });
   }
 
@@ -66,7 +83,7 @@ function MonitoringPage() {
         <p className="text-4xl font-bold text-docker-text mb-4">
           Historial de Rendimiento
         </p>
-        <HistoryChart />
+        <HistoryChart ram={historyRam} cpu={historyCpu} time={historyTime} />
       </div>
     </div>
   );

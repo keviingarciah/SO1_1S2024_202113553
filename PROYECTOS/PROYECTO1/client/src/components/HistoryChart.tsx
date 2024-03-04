@@ -20,7 +20,15 @@ ChartJS.register(
   Legend
 );
 
-function HistoryChart() {
+interface HistoryChartProps {
+  ram: number[];
+  cpu: number[];
+  time: string[];
+}
+
+function HistoryChart({ ram, cpu, time }: HistoryChartProps) {
+  console.log(ram, cpu, time);
+
   const options = {
     responsive: true,
     plugins: {
@@ -34,29 +42,18 @@ function HistoryChart() {
     },
   };
 
-  const labels = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "12:00",
-    "July",
-  ];
-
   const data = {
-    labels,
+    labels: time,
     datasets: [
       {
         label: "Uso de Ram",
-        data: [100, 200, 300, 400, 500, 1, 700],
+        data: ram,
         borderColor: "rgba(75, 192, 192)",
         backgroundColor: "rgba(75, 192, 192, 0.5)",
       },
       {
         label: "Uso de CPU",
-        data: [700, 1, 500, 400, 300, 200, 100],
-
+        data: cpu,
         borderColor: "rgba(255, 159, 64)",
         backgroundColor: "rgba(255, 159, 64, 0.5)",
       },

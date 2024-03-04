@@ -1,6 +1,8 @@
 package main
 
 import (
+	"server/db"
+	"server/models"
 	"server/routes"
 
 	"github.com/gofiber/fiber/v2"
@@ -8,12 +10,11 @@ import (
 )
 
 func main() {
-	/*
-		// Conexión a la base de datos
-		db.DBConnection()
-		// Migra los modelos a la base de datos
-		db.DB.AutoMigrate(models.CPU{}, models.RAM{})
-	*/
+
+	// Conexión a la base de datos
+	db.DBConnection()
+	// Migra los modelos a la base de datos
+	db.DB.AutoMigrate(models.CPU{}, models.RAM{})
 
 	// Crea una nueva instancia de Fiber
 	app := fiber.New()

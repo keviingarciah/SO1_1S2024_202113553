@@ -7,7 +7,7 @@ import (
 type CPU struct {
 	gorm.Model
 
-	Value int
+	Value float64
 	Time  string
 }
 

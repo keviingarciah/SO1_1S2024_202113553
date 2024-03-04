@@ -1,8 +1,18 @@
 export interface LiveMonitoring {
   ram: {
-    free: Number;
+    free: number;
   };
   cpu: {
-    free: Number;
+    free: number;
+  };
+}
+
+export interface HistoryMonitoring {
+  data: {
+    ram: number[];
+    cpu: number[];
+  };
+  history: {
+    time: string[];
   };
 }
