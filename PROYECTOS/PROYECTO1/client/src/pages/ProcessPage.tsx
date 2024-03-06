@@ -1,7 +1,43 @@
+import { useState, useEffect } from "react";
 import DropDown from "../components/DropDown";
 import ProcessTree from "../components/ProcessTree";
 
+import { getProcesses } from "../api/processes.api";
+
+interface Process {
+  pid: number;
+  name: string;
+  ram: number;
+  state: number;
+  user: number;
+  child: ChildProcess[];
+}
+
+interface ChildProcess {
+  pid: number;
+  pidPadre: number;
+  name: string;
+  state: number;
+}
+
 function ProcessesPage() {
+  useEffect(() => {
+    getProcessTree();
+  }, []);
+
+  function getProcessTree() {
+    getProcesses()
+      .then((response) => response.json())
+      .then((data) => {
+        const processes = data["processes"].slice(0, 50);
+        console.log(processes);
+
+        processes.map((process: Process, index: number) => {
+          console.log(`Proceso ${index + 1}:`, process);
+        });
+      });
+  }
+
   const nodes = [
     { id: 1, label: "Node 1" },
     { id: 2, label: "Node 2" },

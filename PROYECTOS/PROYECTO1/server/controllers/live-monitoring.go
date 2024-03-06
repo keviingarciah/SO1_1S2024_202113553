@@ -48,6 +48,7 @@ func LiveMonitoring() fiber.Handler {
 		})
 	}
 }
+
 func GetRam() (int, error) {
 	out, err := exec.Command("cat", "/proc/ram_so1_1s2024").Output()
 	if err != nil {

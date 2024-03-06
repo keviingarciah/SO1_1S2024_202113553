@@ -9,4 +9,5 @@ import (
 func SetupRoutes(app *fiber.App) {
 	app.Get("/monitoring/live", controllers.LiveMonitoring())
 	app.Get("/monitoring/history", controllers.HistoryMonitoring())
+	app.Get("/processes", controllers.ProcessTree())
 }
