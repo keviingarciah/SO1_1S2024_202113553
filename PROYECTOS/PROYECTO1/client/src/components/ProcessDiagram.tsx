@@ -3,12 +3,12 @@ import { Network } from "vis-network";
 
 import { Node, Edge } from "../interfaces/processes.interface";
 
-interface ProcessTreeProps {
+interface ProcessDiagramProps {
   nodes: Node[];
   edges: Edge[];
 }
 
-const ProcessTree = ({ nodes, edges }: ProcessTreeProps) => {
+const ProcessDiagram = ({ nodes, edges }: ProcessDiagramProps) => {
   const container = useRef(null);
   const options = {};
 
@@ -21,4 +21,4 @@ const ProcessTree = ({ nodes, edges }: ProcessTreeProps) => {
   return <div ref={container} style={{ height: "440px", width: "1055px" }} />;
 };
 
-export default ProcessTree;
+export default ProcessDiagram;

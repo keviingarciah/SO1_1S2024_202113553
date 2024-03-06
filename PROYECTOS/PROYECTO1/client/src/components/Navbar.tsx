@@ -28,7 +28,7 @@ function Navbar() {
               className=" hover:bg-docker-hover px-4 py-4 rounded"
             >
               <TbBinaryTree2 className="mr-2 inline text-3xl" />
-              Árbol de Procesos
+              Diagrama de Procesos
             </NavLink>
           </li>
           <li>
