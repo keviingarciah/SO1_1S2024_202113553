@@ -51,9 +51,9 @@ function MonitoringPage() {
         const historyData = historyJson["data"];
         const historyHistory = historyJson["history"];
 
-        setHistoryRam(historyData["ram"]);
-        setHistoryCpu(historyData["cpu"]);
-        setHistoryTime(historyHistory["time"]);
+        setHistoryRam(historyData["ram"].reverse());
+        setHistoryCpu(historyData["cpu"].reverse());
+        setHistoryTime(historyHistory["time"].reverse());
       });
   }
 

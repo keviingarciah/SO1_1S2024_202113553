@@ -27,7 +27,7 @@ func HistoryMonitoring() fiber.Handler {
 
 func getHistoryRam() []int {
 	var results []models.RAM
-	db.DB.Select("value").Limit(100).Find(&results)
+	db.DB.Select("value").Order("id desc").Limit(100).Find(&results)
 
 	var values []int
 	for _, result := range results {
@@ -39,7 +39,7 @@ func getHistoryRam() []int {
 
 func getHistoryCpu() []float64 {
 	var results []models.CPU
-	db.DB.Select("value").Limit(100).Find(&results)
+	db.DB.Select("value").Order("id desc").Limit(100).Find(&results)
 
 	var values []float64
 	for _, result := range results {
@@ -51,7 +51,7 @@ func getHistoryCpu() []float64 {
 
 func getHistoryTime() []string {
 	var results []models.RAM
-	db.DB.Select("time").Limit(100).Find(&results)
+	db.DB.Select("time").Order("id desc").Limit(100).Find(&results)
 
 	var values []string
 	for _, result := range results {
