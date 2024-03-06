@@ -1,15 +1,7 @@
 import { useEffect, useRef } from "react";
 import { Network } from "vis-network";
 
-interface Node {
-  id: number;
-  label: string;
-}
-
-interface Edge {
-  from: number;
-  to: number;
-}
+import { Node, Edge } from "../interfaces/processes.interface";
 
 interface ProcessTreeProps {
   nodes: Node[];

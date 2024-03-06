@@ -3,55 +3,66 @@ import DropDown from "../components/DropDown";
 import ProcessTree from "../components/ProcessTree";
 
 import { getProcesses } from "../api/processes.api";
-
-interface Process {
-  pid: number;
-  name: string;
-  ram: number;
-  state: number;
-  user: number;
-  child: ChildProcess[];
-}
-
-interface ChildProcess {
-  pid: number;
-  pidPadre: number;
-  name: string;
-  state: number;
-}
+import { Process, Node, Edge } from "../interfaces/processes.interface";
 
 function ProcessesPage() {
+  const [processes, setProcesses] = useState<Process[]>([]);
+  const [selectedProcess, setSelectedProcess] = useState<Process | null>(null);
+
+  const [nodes, setNodes] = useState<Node[]>([]);
+  const [edges, setEdges] = useState<Edge[]>([]);
+
   useEffect(() => {
     getProcessTree();
   }, []);
+
+  useEffect(() => {
+    if (selectedProcess) {
+      console.log("Proceso seleccionado padre:", selectedProcess);
+      console.log("Procesos hijos:", selectedProcess.child);
+
+      const nodes = generateNodes(selectedProcess);
+      const edges = generateEdges(selectedProcess);
+
+      console.log("Nodos:", nodes);
+      console.log("Edges:", edges);
+
+      setNodes(nodes);
+      setEdges(edges);
+    }
+  }, [selectedProcess]);
 
   function getProcessTree() {
     getProcesses()
       .then((response) => response.json())
       .then((data) => {
-        const processes = data["processes"].slice(0, 50);
-        console.log(processes);
-
-        processes.map((process: Process, index: number) => {
-          console.log(`Proceso ${index + 1}:`, process);
-        });
+        const processes = data["processes"].slice(0, 100);
+        setProcesses(processes);
       });
   }
 
-  const nodes = [
-    { id: 1, label: "Node 1" },
-    { id: 2, label: "Node 2" },
-    { id: 3, label: "Node 3" },
-    { id: 4, label: "Node 4" },
-    { id: 5, label: "Node 5" },
-  ];
+  function generateNodes(process: Process): Node[] {
+    const nodes: Node[] = [];
 
-  const edges = [
-    { from: 2, to: 1 },
-    { from: 3, to: 1 },
-    { from: 4, to: 2 },
-    { from: 5, to: 3 },
-  ];
+    // Add the parent process
+    nodes.push({ id: process.pid, label: `${process.pid}\n${process.name}` });
+
+    // Add the child processes
+    process.child.forEach((childProcess) => {
+      nodes.push({
+        id: childProcess.pid,
+        label: `${childProcess.pid}\n${childProcess.name}`,
+      } as Node);
+    });
+    return nodes;
+  }
+
+  function generateEdges(process: Process): Edge[] {
+    const edges: Edge[] = process.child.map((childProcess) => {
+      return { from: childProcess.pid, to: childProcess.pidPadre } as Edge;
+    });
+    return edges;
+  }
 
   return (
     <div className="flex flex-col items-center w-auto h-auto mt-5">
@@ -60,7 +71,10 @@ function ProcessesPage() {
           Árbol de Procesos
         </p>
         <div className="flex justify-start w-[90%]">
-          <DropDown />
+          <DropDown
+            processes={processes}
+            onProcessChange={setSelectedProcess}
+          />
         </div>
         <div className="flex justify-center mt-4 mb-4 w-full">
           <ProcessTree nodes={nodes} edges={edges} />

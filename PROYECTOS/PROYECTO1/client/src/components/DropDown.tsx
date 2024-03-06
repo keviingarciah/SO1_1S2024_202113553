@@ -1,22 +1,44 @@
-import { useState } from "react";
+import { Process } from "../interfaces/processes.interface";
+import { useState, useEffect } from "react";
 
-function Dropdown() {
-  const [value, setValue] = useState("");
+interface DropdownProps {
+  processes: Process[];
+  onProcessChange: (process: Process | null) => void;
+}
+
+function Dropdown({ processes, onProcessChange }: DropdownProps) {
+  const [value, setValue] = useState<Process | null>(null);
+
+  useEffect(() => {
+    //console.log("Procesos:", processes);
+  }, [processes]);
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setValue(event.target.value);
+    const selectedProcess = processes.find(
+      (process) => process.pid.toString() === event.target.value
+    );
+    //console.log("Proceso seleccionado:", selectedProcess);
+    if (selectedProcess) {
+      setValue(selectedProcess);
+      onProcessChange(selectedProcess);
+    } else {
+      setValue(null);
+      onProcessChange(null);
+    }
   };
 
   return (
     <select
-      value={value}
+      value={value?.pid || ""}
       onChange={handleChange}
       className="form-select block w-40 mt-1 text-center rounded py-2 bg-docker-blue hover:bg-docker-blue-hover text-white font-semibold"
     >
       <option value="">PROCESOS</option>
-      <option value="opcion1">PID - 1</option>
-      <option value="opcion2">PID - 2</option>
-      <option value="opcion3">PID - 3</option>
+      {processes.map((process, index) => (
+        <option key={index} value={process.pid}>
+          PID - {process.pid}
+        </option>
+      ))}
     </select>
   );
 }
