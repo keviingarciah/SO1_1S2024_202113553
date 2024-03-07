@@ -3,12 +3,12 @@ import { Network } from "vis-network";
 
 import { Node, Edge } from "../interfaces/processes.interface";
 
-interface ProcessDiagramProps {
+interface StateDiagramProps {
   nodes: Node[];
   edges: Edge[];
 }
 
-const ProcessDiagram = ({ nodes, edges }: ProcessDiagramProps) => {
+const StateDiagram = ({ nodes, edges }: StateDiagramProps) => {
   const container = useRef(null);
   const options = {};
 
@@ -18,7 +18,7 @@ const ProcessDiagram = ({ nodes, edges }: ProcessDiagramProps) => {
       new Network(container.current, { nodes, edges }, options);
   }, [container, nodes, edges]);
 
-  return <div ref={container} style={{ height: "420px", width: "1055px" }} />;
+  return <div ref={container} style={{ height: "334px", width: "1055px" }} />;
 };
 
-export default ProcessDiagram;
+export default StateDiagram;

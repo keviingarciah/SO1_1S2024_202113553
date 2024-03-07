@@ -31,7 +31,7 @@ function Dropdown({ processes, onProcessChange }: DropdownProps) {
     <select
       value={value?.pid || ""}
       onChange={handleChange}
-      className="form-select block w-40 mt-1 text-center rounded py-2 bg-docker-blue hover:bg-docker-blue-hover text-white font-semibold"
+      className="form-select block w-40 mt-1 text-center rounded py-2 bg-docker-blue hover:bg-docker-blue-hover text-white font-semibold text-lg"
     >
       <option value="">PROCESOS</option>
       {processes.map((process, index) => (
