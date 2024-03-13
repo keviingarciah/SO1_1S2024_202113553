@@ -18,7 +18,7 @@ const StateDiagram = ({ nodes, edges }: StateDiagramProps) => {
       new Network(container.current, { nodes, edges }, options);
   }, [container, nodes, edges]);
 
-  return <div ref={container} style={{ height: "334px", width: "1055px" }} />;
+  return <div ref={container} style={{ height: "340px", width: "1055px" }} />;
 };
 
 export default StateDiagram;

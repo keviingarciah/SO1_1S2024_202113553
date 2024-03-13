@@ -18,7 +18,7 @@ const ProcessDiagram = ({ nodes, edges }: ProcessDiagramProps) => {
       new Network(container.current, { nodes, edges }, options);
   }, [container, nodes, edges]);
 
-  return <div ref={container} style={{ height: "420px", width: "1055px" }} />;
+  return <div ref={container} style={{ height: "426px", width: "1055px" }} />;
 };
 
 export default ProcessDiagram;

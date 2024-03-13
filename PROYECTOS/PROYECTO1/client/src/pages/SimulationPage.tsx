@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Button from "../components/Button";
 import StateDiagram from "../components/StateDiagram";
-import { Process, Node, Edge } from "../interfaces/processes.interface";
+import { Node, Edge } from "../interfaces/processes.interface";
 
 // RunningNodes and RunningEdges
 const NewNodes = [
