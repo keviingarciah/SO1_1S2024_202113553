@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  api:
+    image: test-api
+    container_name: test-server
+    privileged: true
+    pid: host
+    restart: always
+    volumes:
+      - type: bind
+        source: /proc
+        target: /proc
+    ports:
+      - "8000:8000"

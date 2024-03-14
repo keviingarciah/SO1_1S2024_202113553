@@ -2,6 +2,8 @@ package db
 
 import (
 	"log"
+	"server/config"
+	"server/models"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -9,13 +11,18 @@ import (
 
 var DB *gorm.DB
 
-func DBConnection() {
+func DBConnection() *gorm.DB {
 	var err error
 
-	dsn := "root:123456@tcp(127.0.0.1:3306)/sopes_db?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := config.GetDSN()
 	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
 	if err != nil {
 		log.Fatal("Failed to connect DB")
 	}
+
+	// Migra los modelos a la base de datos
+	DB.AutoMigrate(models.CPU{}, models.RAM{})
+
+	return DB
 }

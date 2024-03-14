@@ -1,10 +1,28 @@
 version: "3.8"
 
 services:
-  mysqldb:
+  db:
     image: mysql
+    container_name: test-db
+    restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=123456
       - MYSQL_DATABASE=sopes_db
     ports:
       - 3306:3306
+    volumes:
+      - "/var/lib/mysql"
+  api:
+    image: test-api
+    container_name: test-server
+    privileged: true
+    pid: host
+    restart: always
+    volumes:
+      - type: bind
+        source: /proc
+        target: /proc
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"server/db"
 	"server/routes"
 
 	"github.com/gofiber/fiber/v2"
@@ -8,12 +9,10 @@ import (
 )
 
 func main() {
-	/*
-		// Conexión a la base de datos
-		db.DBConnection()
-		// Migra los modelos a la base de datos
-		db.DB.AutoMigrate(models.CPU{}, models.RAM{})
-	*/
+
+	// Conexión a la base de datos
+	db.DBConnection()
+
 	// Crea una nueva instancia de Fiber
 	app := fiber.New()
 	// Configura el CORS una vez
@@ -23,5 +22,5 @@ func main() {
 	routes.SetupRoutes(app)
 
 	// Escucha en el puerto 3000
-	app.Listen(":3000")
+	app.Listen(":8000")
 }

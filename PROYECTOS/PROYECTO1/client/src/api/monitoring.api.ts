@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000";
+const API_URL = "http://localhost:8000";
 
 export const getLive = () => fetch(`${API_URL}/monitoring/live`);
 

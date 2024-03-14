@@ -2,6 +2,12 @@ import { useState } from "react";
 import Button from "../components/Button";
 import StateDiagram from "../components/StateDiagram";
 import { Node, Edge } from "../interfaces/processes.interface";
+import {
+  newSimulation,
+  stopSimulation,
+  resumeSimulation,
+  killSimulation,
+} from "../api/simulation.api";
 
 // RunningNodes and RunningEdges
 const NewNodes = [
@@ -57,12 +63,43 @@ const KillEdges = [
 ];
 
 function SimulationPage() {
+  const [pid, setPid] = useState<string>("---");
+
   const [currentNodes, setCurrentNodes] = useState<Node[]>([]);
   const [currentEdges, setCurrentEdges] = useState<Edge[]>([]);
 
-  const handleClick = (nodes: Node[], edges: Edge[]) => {
-    setCurrentNodes(nodes);
-    setCurrentEdges(edges);
+  const handleNew = () => {
+    newSimulation()
+      .then((response) => response.json())
+      .then((data) => {
+        const pid = data["pid"];
+        setPid(pid);
+      });
+
+    setCurrentNodes(NewNodes);
+    setCurrentEdges(NewEdges);
+  };
+
+  const handleStop = () => {
+    stopSimulation(pid);
+
+    setCurrentNodes(StopNodes);
+    setCurrentEdges(StopEdges);
+  };
+
+  const handleResume = () => {
+    resumeSimulation(pid);
+
+    setCurrentNodes(ResumeNodes);
+    setCurrentEdges(ResumeEdges);
+  };
+
+  const handleKill = () => {
+    killSimulation(pid);
+
+    setPid("---");
+    setCurrentNodes(KillNodes);
+    setCurrentEdges(KillEdges);
   };
 
   return (
@@ -73,23 +110,20 @@ function SimulationPage() {
         </p>
         <div className="flex justify-start w-[90%]">
           <p className="text-lg bg-docker-blue text-white font-semibold py-2 px-6 rounded">
-            PID: 1
+            {`PID: ${pid}`}
           </p>
         </div>
         <div className="flex justify-between mt-4 mb-4 w-[60%]">
-          <Button type="new" onClick={() => handleClick(NewNodes, NewEdges)}>
+          <Button type="new" onClick={() => handleNew()}>
             NEW
           </Button>
-          <Button type="stop" onClick={() => handleClick(StopNodes, StopEdges)}>
+          <Button type="stop" onClick={() => handleStop()}>
             STOP
           </Button>
-          <Button
-            type="resume"
-            onClick={() => handleClick(ResumeNodes, ResumeEdges)}
-          >
+          <Button type="resume" onClick={() => handleResume()}>
             RESUME
           </Button>
-          <Button type="kill" onClick={() => handleClick(KillNodes, KillEdges)}>
+          <Button type="kill" onClick={() => handleKill()}>
             KILL
           </Button>
         </div>

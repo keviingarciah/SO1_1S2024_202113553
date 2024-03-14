@@ -9,7 +9,7 @@ function Navbar() {
     <div className="bg-docker-blue">
       <nav className="flex items-center mx-5 p-4">
         <div className="text-white font-semibold text-4xl flex items  -center">
-          <FaDocker className="mr-4 text-6xl" />
+          <FaDocker className="mr-3 text-6xl" />
           <p className="mt-2">SO1</p>
         </div>
         <ul className="flex ml-auto text-white text-xl font-semibold">
