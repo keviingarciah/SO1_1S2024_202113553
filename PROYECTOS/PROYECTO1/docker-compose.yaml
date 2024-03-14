@@ -12,7 +12,20 @@ services:
       - 3306:3306
     volumes:
       - db-data:/var/lib/mysql
-
+  server:
+    image: testapi
+    container_name: testserver
+    privileged: true
+    pid: host
+    restart: always
+    volumes:
+      - type: bind
+        source: /proc
+        target: /proc
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
 volumes:
   db-data:
     driver: local

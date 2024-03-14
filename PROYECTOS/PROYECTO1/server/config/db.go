@@ -5,7 +5,7 @@ import "fmt"
 const (
 	DBUser = "root"
 	DBPass = "123456"
-	DBHost = "test-db"
+	DBHost = "testdb"
 	DBPort = "3306"
 	DBName = "sopes_db"
 )
