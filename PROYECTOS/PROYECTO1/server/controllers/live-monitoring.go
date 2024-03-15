@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"math"
 	"os/exec"
 	"server/db"
@@ -50,24 +51,32 @@ func LiveMonitoring() fiber.Handler {
 }
 
 func GetRam() (int, error) {
-	out, err := exec.Command("cat", "/proc/ram_so1_1s2024").Output()
+	out, err := exec.Command("sh", "-c", "cat /proc/ram_so1_1s2024").CombinedOutput()
 	if err != nil {
+		err = fmt.Errorf("error al ejecutar el comando 'cat': %v, salida: %s", err, out)
+		fmt.Println(err)
 		return 0, err
 	}
 	ram, err := strconv.Atoi(strings.TrimSuffix(string(out), "\n"))
 	if err != nil {
+		err = fmt.Errorf("error al convertir la salida a un entero: %v", err)
+		fmt.Println(err)
 		return 0, err
 	}
 	return ram, nil
 }
 
 func GetCpu() (int, error) {
-	out, err := exec.Command("cat", "/proc/cpu_so1_1s2024").Output()
+	out, err := exec.Command("sh", "-c", "cat /proc/cpu_so1_1s2024").CombinedOutput()
 	if err != nil {
+		err = fmt.Errorf("error al ejecutar el comando 'cat': %v, salida: %s", err, out)
+		fmt.Println(err)
 		return 0, err
 	}
 	cpu, err := strconv.Atoi(strings.TrimSuffix(string(out), "\n"))
 	if err != nil {
+		err = fmt.Errorf("error al convertir la salida a un entero: %v", err)
+		fmt.Println(err)
 		return 0, err
 	}
 	return cpu, nil

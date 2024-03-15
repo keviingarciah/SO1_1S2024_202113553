@@ -33,7 +33,7 @@ func ProcessTree() fiber.Handler {
 }
 
 func GetProcesses() (string, error) {
-	out, err := exec.Command("cat", "/proc/proc_so1_1s2024").Output()
+	out, err := exec.Command("sh", "-c", "cat /proc/proc_so1_1s2024").Output()
 	if err != nil {
 		return "", err
 	}

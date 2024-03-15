@@ -1,3 +1,3 @@
-const API_URL = "http://localhost:8000";
+const API_URL = "/api";
 
 export const getProcesses = () => fetch(`${API_URL}/processes`);

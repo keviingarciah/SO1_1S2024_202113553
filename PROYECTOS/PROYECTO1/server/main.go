@@ -22,5 +22,5 @@ func main() {
 	routes.SetupRoutes(app)
 
 	// Escucha en el puerto 3000
-	app.Listen(":8000")
+	app.Listen(":8080")
 }

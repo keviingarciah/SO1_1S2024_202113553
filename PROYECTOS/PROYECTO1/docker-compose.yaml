@@ -18,14 +18,19 @@ services:
     privileged: true
     pid: host
     restart: always
-    volumes:
-      - type: bind
-        source: /proc
-        target: /proc
     ports:
-      - "8000:8000"
+      - 8080:8080
+    volumes:
+      - /proc:/host_proc
     depends_on:
       - db
+  client:
+    image: testfrontend
+    container_name: testclient
+    restart: always
+    ports:
+      - 80:80
+    depends_on:
+      - server
 volumes:
   db-data:
-    driver: local

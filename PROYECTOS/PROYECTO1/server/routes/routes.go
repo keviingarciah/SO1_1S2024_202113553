@@ -7,8 +7,11 @@ import (
 )
 
 func SetupRoutes(app *fiber.App) {
-	app.Get("/monitoring/live", controllers.LiveMonitoring())
-	app.Get("/monitoring/history", controllers.HistoryMonitoring())
-	app.Get("/processes", controllers.ProcessTree())
-	app.Get("/simulate/:state", controllers.SimulateStates())
+	// Crea un grupo de rutas para /api
+	api := app.Group("/api")
+
+	api.Get("/monitoring/live", controllers.LiveMonitoring())
+	api.Get("/monitoring/history", controllers.HistoryMonitoring())
+	api.Get("/processes", controllers.ProcessTree())
+	api.Get("/simulate/:state", controllers.SimulateStates())
 }
