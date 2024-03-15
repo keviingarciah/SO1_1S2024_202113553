@@ -13,8 +13,8 @@ services:
     volumes:
       - db-data:/var/lib/mysql
   server:
-    image: keviingarciah/testapi:v2.0
-    container_name: testserver
+    image: keviingarciah/so1_p1_server:v1.0
+    container_name: so1_p1_server
     privileged: true
     pid: host
     restart: always
@@ -25,8 +25,8 @@ services:
     depends_on:
       - db
   client:
-    image: keviingarciah/testfrontend:v3.0
-    container_name: testclient
+    image: keviingarciah/so1_p1_client:v2.0
+    container_name: so1_p1_client
     restart: always
     ports:
       - 80:80
