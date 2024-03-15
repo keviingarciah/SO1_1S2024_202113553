@@ -13,7 +13,7 @@ services:
     volumes:
       - db-data:/var/lib/mysql
   server:
-    image: testapi
+    image: keviingarciah/testapi:v2.0
     container_name: testserver
     privileged: true
     pid: host
@@ -25,7 +25,7 @@ services:
     depends_on:
       - db
   client:
-    image: testfrontend
+    image: keviingarciah/testfrontend:v3.0
     container_name: testclient
     restart: always
     ports:
