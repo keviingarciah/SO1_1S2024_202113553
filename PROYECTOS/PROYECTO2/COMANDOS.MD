@@ -1,6 +1,6 @@
 # PROYECTO 2
 
-## Comandos yaml
+## Comandos Esenciales
 
 ### Crear
 
@@ -33,16 +33,29 @@ kubectl get deployments --all-namespaces
 
 ```bash
 kubectl get services
+kubectl get deployments --all-namespaces
+
 ```
 
 ## Pods
 
 ```bash
 kubectl get pods
+kubectl get deployments --all-namespaces
+
 ```
 
-## Configurar Namespace
+## Configurar Namespace Predeterminado
 
 ```bash
 kubectl config set-context --current --namespace=<nombre-del-namespace>
+```
+
+## Kafka
+
+### Crear
+
+```bash
+kubectl create -f 'https://strimzi.io/install/latest?namespace=kafka' -n <nombre_namespace>
+kubectl apply -f https://strimzi.io/examples/latest/kafka/kafka-persistent-single.yaml -n <nombre_namespace>
 ```
