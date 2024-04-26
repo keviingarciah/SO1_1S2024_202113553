@@ -11,7 +11,7 @@ import (
 
 func main() {
 	r := kafka.NewReader(kafka.ReaderConfig{
-		Brokers:     []string{"my-cluster-kafka-bootstrap:9091", "my-cluster-kafka-bootstrap:9092", "my-cluster-kafka-bootstrap:9093"},
+		Brokers:     []string{"my-cluster-kafka-bootstrap:9092"},
 		GroupID:     uuid.New().String(),
 		Topic:       "so1-proyecto2",
 		MinBytes:    10e3, // 10KB
@@ -26,6 +26,8 @@ func main() {
 			break
 		}
 		fmt.Printf("message at topic/partition/offset %v/%v/%v: %s = %s\n", m.Topic, m.Partition, m.Offset, string(m.Key), string(m.Value))
+
+		log.Println("Message received successfully")
 	}
 
 	if err := r.Close(); err != nil {

@@ -19,6 +19,3 @@ EXPOSE 3001
 
 # Comando para ejecutar la aplicación
 CMD ["./main"]
-
-# docker build -t jhonathantocay/server_grpc .
-# docker run -p 3000:3000 jhonathantocay/server_grpc

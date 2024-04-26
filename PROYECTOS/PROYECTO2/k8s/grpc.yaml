@@ -23,7 +23,7 @@ spec:
             cpu: "0.2"
             memory: "500Mi"
       - name: grpc-server
-        image: keviingarciah/so1_grpc_server:v1.2
+        image: keviingarciah/so1_grpc_server:v1.3
         ports:
         - containerPort: 3001
         resources:

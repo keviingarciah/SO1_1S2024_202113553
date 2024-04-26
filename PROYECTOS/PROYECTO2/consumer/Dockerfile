@@ -14,8 +14,5 @@ COPY . .
 # Compila la aplicación
 RUN go build main.go
 
-# Expone el puerto 3000
-EXPOSE 3000
-
 # Comando para ejecutar la aplicación
 CMD ["./main"]
