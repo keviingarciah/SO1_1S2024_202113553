@@ -3,7 +3,6 @@ package db
 import (
 	"context"
 	"log"
-	"time"
 
 	models "consumer/models"
 
@@ -11,13 +10,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-type Album struct {
-	Album  string
-	Year   string
-	Artist string
-	Ranked string
-	Date   time.Time
-}
+var clientMongo *mongo.Client
 
 func ConnectMongo() (*mongo.Client, error) {
 	// Establece las opciones del cliente
@@ -48,10 +41,13 @@ func InsertLog(client *mongo.Client, data models.Vote) {
 }
 
 func InsertMongo(data models.Vote) {
-	client, err := ConnectMongo()
-	if err != nil {
-		log.Fatal(err)
+	if clientMongo == nil {
+		var err error
+		clientMongo, err = ConnectMongo()
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 
-	InsertLog(client, data)
+	InsertLog(clientMongo, data)
 }
