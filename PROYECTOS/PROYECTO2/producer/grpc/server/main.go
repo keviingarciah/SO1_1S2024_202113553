@@ -26,7 +26,6 @@ type Data struct {
 }
 
 func (s *server) ReturnInfo(ctx context.Context, in *pb.RequestId) (*pb.ReplyInfo, error) {
-	fmt.Println("Recibí de cliente: ", in.GetArtist())
 	data := Data{
 		Year:   in.GetYear(),
 		Album:  in.GetAlbum(),
@@ -35,7 +34,7 @@ func (s *server) ReturnInfo(ctx context.Context, in *pb.RequestId) (*pb.ReplyInf
 	}
 	fmt.Println(data)
 
-	return &pb.ReplyInfo{Info: "Hola cliente, recibí el album"}, nil
+	return &pb.ReplyInfo{Info: " Álbum recibido desde el servidor"}, nil
 }
 
 func main() {

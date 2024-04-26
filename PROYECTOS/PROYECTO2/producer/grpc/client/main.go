@@ -58,14 +58,16 @@ func insertData(c *fiber.Ctx) error {
 		log.Fatalln(err)
 	}
 
-	fmt.Println("Respuesta del server " + ret.GetInfo())
+	fmt.Println("Álbum enviado desde el cliente ->" + ret.GetInfo())
 
-	return nil
+	return c.Status(200).JSON(fiber.Map{
+		"message": "Álbum enviado al servidor",
+	})
 }
 
 func main() {
 	app := fiber.New()
-	app.Post("/insert", insertData)
+	app.Post("/grpc", insertData)
 
 	err := app.Listen(":3000")
 	if err != nil {
