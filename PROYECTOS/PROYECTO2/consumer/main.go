@@ -22,6 +22,7 @@ func main() {
 	for {
 		m, err := r.ReadMessage(context.Background())
 		if err != nil {
+			log.Fatal("failed to read message:", err)
 			break
 		}
 		fmt.Printf("message at topic/partition/offset %v/%v/%v: %s = %s\n", m.Topic, m.Partition, m.Offset, string(m.Key), string(m.Value))
