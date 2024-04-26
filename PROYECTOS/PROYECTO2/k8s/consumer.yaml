@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: consumer
-        image: keviingarciah/so1_consumer:v1.2
+        image: keviingarciah/so1_consumer:v1.3
         resources:
           requests:
             memory: "500Mi"

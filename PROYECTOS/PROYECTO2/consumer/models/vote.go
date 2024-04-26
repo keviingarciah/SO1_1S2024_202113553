@@ -1,6 +1,6 @@
 package models
 
-type Vote struct {
+type Data struct {
 	Album  string
 	Year   string
 	Artist string

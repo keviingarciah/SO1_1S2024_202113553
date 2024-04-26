@@ -19,7 +19,7 @@ type Album struct {
 	Date   time.Time
 }
 
-func ConnectDB() (*mongo.Client, error) {
+func ConnectMongo() (*mongo.Client, error) {
 	// Establece las opciones del cliente
 	clientOptions := options.Client().ApplyURI("mongodb://mongodb-service:27017")
 
@@ -35,24 +35,23 @@ func ConnectDB() (*mongo.Client, error) {
 		log.Fatal(err)
 	}
 
-	log.Println("Conectado a MongoDB!")
 	return client, nil
 }
 
-func InsertAlbum(client *mongo.Client, data models.Data) {
+func InsertLog(client *mongo.Client, data models.Vote) {
 	collection := client.Database("so1_proyecto2").Collection("votes")
 	_, err := collection.InsertOne(context.TODO(), data)
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Println("Album insertado en mongoDB!")
+	log.Println("Log insertado en mongoDB!")
 }
 
-func InsertMongo(data models.Data) {
-	client, err := ConnectDB()
+func InsertMongo(data models.Vote) {
+	client, err := ConnectMongo()
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	InsertAlbum(client, data)
+	InsertLog(client, data)
 }

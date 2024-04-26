@@ -1,6 +1,6 @@
 package models
 
-type Data struct {
-	Data         Vote
+type Vote struct {
+	Data         Data
 	CreationDate string
 }
