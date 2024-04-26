@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"log"
 
+	db "consumer/db"
+
 	"github.com/google/uuid"
 	"github.com/segmentio/kafka-go"
 )
@@ -28,6 +30,8 @@ func main() {
 		fmt.Printf("message at topic/partition/offset %v/%v/%v: %s = %s\n", m.Topic, m.Partition, m.Offset, string(m.Key), string(m.Value))
 
 		log.Println("Message received successfully")
+
+		db.InsertData(m.Value)
 	}
 
 	if err := r.Close(); err != nil {
