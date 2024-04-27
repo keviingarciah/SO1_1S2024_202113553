@@ -1,4 +1,4 @@
-# PROYECTO 2
+# Configuración de Kubernetes
 
 ## Comandos Esenciales
 
