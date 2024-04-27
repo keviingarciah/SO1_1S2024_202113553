@@ -1,10 +1,14 @@
 use rocket::response::status::BadRequest;
-use rocket::serde::json::{json, Value as JsonValue};
 use rocket::serde::json::Json;
 use rocket::config::SecretKey;
 use rocket_cors::{AllowedOrigins, CorsOptions};
+use std::convert::Infallible;
+use serde_json;
+use rocket::serde::Serialize; // Añade esta línea
+use rdkafka::producer::{FutureProducer, FutureRecord};
+use rdkafka::util::Timeout;
 
-#[derive(rocket::serde::Deserialize)]
+#[derive(rocket::serde::Deserialize, Clone, Serialize)] // Añade Serialize aquí
 struct Data {
     album: String,
     year: String,
@@ -12,13 +16,54 @@ struct Data {
     ranked: String,
 }
 
+async fn kafka_producer(payload: Json<Data>) -> Result<Json<String>, Infallible> {
+    let payload_data = payload.into_inner(); // Obtén el Data de payload
+    let payload_string = match serde_json::to_string(&payload_data) { // Serializa payload_data
+        Ok(v) => v,
+        Err(e) => {
+            println!("Failed to serialize payload to JSON: {:?}", e);
+            "Error".to_string() // return an empty string if there's an error
+        }
+    };
+
+    // create producer
+    let producer: FutureProducer = rdkafka::ClientConfig::new()
+        .set("bootstrap.servers", "my-cluster-kafka-bootstrap:9092")
+        .create()
+        .expect("Producer creation error");
+
+
+    // Produce a message to Kafka
+    let topic = "so1-proyecto2";
+    let delivery_status = producer.send(
+        FutureRecord::<String, _>::to(&topic)
+            .payload(&payload_string.as_bytes().to_vec()),
+        Timeout::Never,
+    ).await;
+    
+    match delivery_status {
+        Ok((partition, offset)) => println!("Message delivered to partition {} at offset {}", partition, offset),
+        Err((e, _)) => println!("Error producing message: {:?}", e),
+    }
+    
+    // return the payload
+    Ok(Json("Received".to_string()))
+}
+
 #[rocket::post("/data", data = "<data>")]
-fn receive_data(data: Json<Data>) -> Result<String, BadRequest<String>> {
+async fn receive_data(data: Json<Data>) -> Result<String, BadRequest<String>> {
     let received_data = data.into_inner();
-    let response = JsonValue::from(json!({
-        "message": format!("Received data: Album: {}, Year: {}, Artist: {}, Ranked: {}", received_data.album, received_data.year, received_data.artist, received_data.ranked)
-    }));
-    Ok(response.to_string())
+
+    println!("Received data: Album: {}, Year: {}, Artist: {}, Ranked: {}", received_data.album, received_data.year, received_data.artist, received_data.ranked);
+
+    // Call kafka_producer
+    let result = kafka_producer(Json(received_data.clone())).await;
+    match result {
+        Ok(_) => println!("Data sent to Kafka producer successfully"),
+        Err(_) => println!("Failed to send data to Kafka producer"),
+    }
+
+    Ok("Data received and sent to Kafka producer".to_string())
 }
 
 #[rocket::main]
