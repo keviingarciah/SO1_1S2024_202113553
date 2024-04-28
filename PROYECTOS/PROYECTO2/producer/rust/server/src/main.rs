@@ -10,10 +10,10 @@ use rdkafka::util::Timeout;
 
 #[derive(rocket::serde::Deserialize, Clone, Serialize)] // Añade Serialize aquí
 struct Data {
+    name: String,
     album: String,
     year: String,
-    artist: String,
-    ranked: String,
+    rank: String,
 }
 
 async fn kafka_producer(payload: Json<Data>) -> Result<Json<String>, Infallible> {
@@ -53,8 +53,6 @@ async fn kafka_producer(payload: Json<Data>) -> Result<Json<String>, Infallible>
 #[rocket::post("/data", data = "<data>")]
 async fn receive_data(data: Json<Data>) -> Result<String, BadRequest<String>> {
     let received_data = data.into_inner();
-
-    println!("Received data: Album: {}, Year: {}, Artist: {}, Ranked: {}", received_data.album, received_data.year, received_data.artist, received_data.ranked);
 
     // Call kafka_producer
     let result = kafka_producer(Json(received_data.clone())).await;

@@ -7,10 +7,10 @@ use rocket::serde::json::Json;
 
 #[derive(Debug, Serialize, Deserialize)]
 struct Data {
+    name: String,
     album: String,
     year: String,
-    artist: String,
-    ranked: String,
+    rank: String,
 }
 
 #[post("/rust", data = "<data>")]

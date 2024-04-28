@@ -21,5 +21,5 @@ func InsertData(event []byte) {
 	}
 
 	InsertMongo(log)
-	InsertRedis(log)
+	go InsertRedis(log)
 }

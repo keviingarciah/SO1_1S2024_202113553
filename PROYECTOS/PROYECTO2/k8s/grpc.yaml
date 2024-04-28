@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: grpc-client
-        image: keviingarciah/so1_grpc_client:v1.3
+        image: keviingarciah/so1_grpc_client:v1.4
         ports:
         - containerPort: 3000
         resources:
@@ -23,7 +23,7 @@ spec:
             cpu: "0.2"
             memory: "500Mi"
       - name: grpc-server
-        image: keviingarciah/so1_grpc_server:v1.3
+        image: keviingarciah/so1_grpc_server:v1.4
         ports:
         - containerPort: 3001
         resources:

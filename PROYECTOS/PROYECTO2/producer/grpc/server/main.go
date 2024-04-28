@@ -22,10 +22,10 @@ const (
 
 func (s *server) ReturnInfo(ctx context.Context, in *pb.RequestId) (*pb.ReplyInfo, error) {
 	data := models.Vote{
-		Year:   in.GetYear(),
-		Album:  in.GetAlbum(),
-		Artist: in.GetArtist(),
-		Ranked: in.GetRanked(),
+		Name:  in.GetName(),
+		Album: in.GetAlbum(),
+		Year:  in.GetYear(),
+		Rank:  in.GetRank(),
 	}
 
 	fmt.Println(data)

@@ -1,8 +1,8 @@
 package models
 
 type Vote struct {
-	Album  string
-	Year   string
-	Artist string
-	Ranked string
+	Name  string
+	Album string
+	Year  string
+	Rank  string
 }
